@@ -14,6 +14,7 @@ angular.module('bank-account', ['firebase'])
     $rootScope.balance += $scope.amount;
     $scope.deposits.push({amount:$scope.amount, date:new Date()});
   };
+
   $scope.withdraw = function(){
     var fee = 0;
     if($rootScope.balance >= 0 && ($rootScope.balance - $scope.amount < 0)){
@@ -23,5 +24,10 @@ angular.module('bank-account', ['firebase'])
 
     $rootScope.balance -= $scope.amount + fee;
     $scope.withdraws.push({amount:$scope.amount, date:new Date()});
+  };
+
+  $scope.undoAmount = function(amount, index, arrayName){
+    $rootScope.balance += amount;
+    $scope[arrayName].splice(index, 1);
   };
 }]);
